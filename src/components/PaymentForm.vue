@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from "vuex";
 export default {
   name: "PaymentForm",
   data() {
@@ -22,14 +23,18 @@ export default {
     };
   },
   methods: {
+    ...mapMutations("paymentData", ["addNewPayment"]),
     addPayment() {
       const data = {
         category: this.category,
         value: this.value,
         date: this.date,
       };
-      this.$emit("addPayment", data);
+      this.addNewPayment(data);
     },
+  },
+  computed: {
+    ...mapState("paymentData", ["paymentData"]),
   },
 };
 </script>

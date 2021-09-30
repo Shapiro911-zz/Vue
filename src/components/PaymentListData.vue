@@ -10,7 +10,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, index) in list" :key="item.date">
+        <tr v-for="(item, index) in paymentData" :key="item.id">
           <td>{{ index + 1 }}</td>
           <td>{{ item.date }}</td>
           <td>{{ item.category }}</td>
@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   name: "PaymentListData",
   props: {
@@ -29,6 +30,9 @@ export default {
       type: Array,
       default: () => [],
     },
+  },
+  computed: {
+    ...mapState("paymentData", ["paymentData"]),
   },
 };
 </script>
