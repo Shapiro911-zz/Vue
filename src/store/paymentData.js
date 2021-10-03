@@ -1,22 +1,41 @@
 const state = {
-    paymentData: [{ "id": 1, "date": "20.03.2020", "category": "Food", "value": 169 },
-    { "id": 2, "date": "21.03.2020", "category": "Navigation", "value": 50 },
-    { "id": 3, "date": "22.03.2020", "category": "Sport", "value": 450 },
-    { "id": 4, "date": "23.03.2020", "category": "Entertaiment", "value": 969 },
-    { "id": 5, "date": "24.03.2020", "category": "Education", "value": 1500 },
-    { "id": 6, "date": "25.03.2020", "category": "Food", "value": 200 }
-    ],
+    paymentData: [],
+    currentList: [],
+    totalPages: null,
+    limit: 3,
 }
 
 const mutations = {
+    setPaymentData(state, paymentData) {
+        let flag = false;
+        for (let i = 0; i < paymentData.length; i++) {
+            for (let j = 0; j < state.paymentData.length; j++) {
+                if (state.paymentData[j].id == paymentData[i].id) {
+                    flag = true;
+                }
+            }
+            if (flag == false) {
+                state.paymentData.push(paymentData[i]);
+            }
+            flag = false;
+        }
+        state.totalPages = Math.ceil(state.paymentData.length / state.limit);
+    },
     addNewPayment(state, data) {
         state.paymentData.push(data);
-    }
+    },
 }
 
 const actions = {
-    fetchData(page) {
-        page;
+    fetchData({ commit }, page) {
+        let from = (page - 1) * state.limit;
+        let to = from + state.limit;
+        fetch('https://shapiro911.github.io/DB/data/paymentData.json')
+            .then(response => response.json())
+            .then(res => {
+                commit('setPaymentData', res)
+                state.currentList = state.paymentData.slice(from, to)
+            })
     }
 }
 

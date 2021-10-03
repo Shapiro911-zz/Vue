@@ -7,6 +7,7 @@ import paymentData from './paymentData'
 
 export default new Vuex.Store({
     modules: {
-        paymentData
+        paymentData,
+
     }
 })
