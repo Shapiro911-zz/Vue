@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from "vuex";
+import { mapState, mapActions } from "vuex";
 export default {
   name: "PaymentForm",
   data() {
@@ -24,7 +24,7 @@ export default {
     };
   },
   methods: {
-    ...mapMutations("paymentData", ["addNewPayment"]),
+    ...mapActions("paymentData", ["addNewPayment"]),
     addPayment() {
       const data = {
         id: this.paymentData.length + 1,

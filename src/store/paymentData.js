@@ -3,6 +3,7 @@ const state = {
     currentList: [],
     totalPages: null,
     limit: 3,
+    currentPage: 1,
 }
 
 const mutations = {
@@ -21,10 +22,6 @@ const mutations = {
         }
         state.totalPages = Math.ceil(state.paymentData.length / state.limit);
     },
-    addNewPayment(state, data) {
-        state.paymentData.push(data);
-        state.totalPages = Math.ceil(state.paymentData.length / state.limit);
-    },
 }
 
 const actions = {
@@ -36,8 +33,13 @@ const actions = {
             .then(res => {
                 commit('setPaymentData', res)
                 state.currentList = state.paymentData.slice(from, to)
+                state.currentPage = page;
             })
-    }
+    },
+    addNewPayment({ dispatch }, data) {
+        state.paymentData.push(data);
+        dispatch('fetchData', state.currentPage)
+    },
 }
 
 export default {
