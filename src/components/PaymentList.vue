@@ -22,6 +22,14 @@ export default {
       isVisibleForm: false,
     };
   },
+  methods: {
+    link(category, value) {
+      this.$router.push({
+        name: "addPayment",
+        query: { category: category, value: value },
+      });
+    },
+  },
 };
 </script>
 
