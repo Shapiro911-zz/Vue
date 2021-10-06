@@ -17,6 +17,7 @@ export default {
   name: "PaymentForm",
   data() {
     return {
+      id: null,
       category: "",
       value: null,
       date: "",
@@ -26,6 +27,7 @@ export default {
     ...mapMutations("paymentData", ["addNewPayment"]),
     addPayment() {
       const data = {
+        id: this.paymentData.length + 1,
         category: this.category,
         value: this.value,
         date: this.date,

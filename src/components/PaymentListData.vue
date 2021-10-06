@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { mapActions, mapMutations, mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 export default {
   name: "PaymentListData",
   data() {
@@ -44,7 +44,6 @@ export default {
   },
   methods: {
     ...mapActions("paymentData", ["fetchData"]),
-    ...mapMutations("paymentData", ["setPaymentData"]),
     choosePage(page) {
       this.currentPage = page;
       this.fetchData(this.currentPage);

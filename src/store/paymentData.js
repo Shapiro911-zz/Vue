@@ -23,6 +23,7 @@ const mutations = {
     },
     addNewPayment(state, data) {
         state.paymentData.push(data);
+        state.totalPages = Math.ceil(state.paymentData.length / state.limit);
     },
 }
 
