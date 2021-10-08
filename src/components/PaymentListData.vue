@@ -33,36 +33,43 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapState, mapMutations } from "vuex";
 export default {
   name: "PaymentListData",
   data() {
     return {
       list: [],
-      currentPage: 1,
     };
   },
   methods: {
     ...mapActions("paymentData", ["fetchData"]),
+    ...mapMutations("paymentData", ["setCurrentPage"]),
     choosePage(page) {
-      this.currentPage = page;
+      this.setCurrentPage(page);
       this.fetchData(this.currentPage);
     },
     prevPage() {
       if (this.currentPage != 1) {
-        this.currentPage--;
+        let page = this.currentPage - 1;
+        this.setCurrentPage(page);
         this.fetchData(this.currentPage);
       }
     },
     nextPage() {
       if (this.currentPage != this.totalPages) {
-        this.currentPage++;
+        let page = this.currentPage + 1;
+        this.setCurrentPage(page);
         this.fetchData(this.currentPage);
       }
     },
   },
   computed: {
-    ...mapState("paymentData", ["paymentData", "totalPages", "currentList"]),
+    ...mapState("paymentData", [
+      "paymentData",
+      "totalPages",
+      "currentList",
+      "currentPage",
+    ]),
   },
   created() {
     this.fetchData(this.currentPage);

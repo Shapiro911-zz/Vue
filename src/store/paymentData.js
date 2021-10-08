@@ -22,6 +22,9 @@ const mutations = {
         }
         state.totalPages = Math.ceil(state.paymentData.length / state.limit);
     },
+    setCurrentPage(state, page) {
+        state.currentPage = page;
+    }
 }
 
 const actions = {
