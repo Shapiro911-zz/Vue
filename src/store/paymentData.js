@@ -36,6 +36,20 @@ const mutations = {
     },
     setCurrentPage(state, page) {
         state.currentPage = page;
+    },
+    deletePayment(state, id) {
+        for (let i = 0; i < state.paymentData.length; i++) {
+            if (state.paymentData[i].id == id) {
+                state.paymentData.splice(i, 1);
+            }
+        }
+    },
+    redactPayment(state, data) {
+        for (let i = 0; i < state.paymentData.length; i++) {
+            if (state.paymentData[i].id == data.id) {
+                state.paymentData.splice(i, 1, data);
+            }
+        }
     }
 }
 

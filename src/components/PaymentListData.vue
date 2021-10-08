@@ -15,6 +15,10 @@
           <td>{{ item.date }}</td>
           <td>{{ item.category }}</td>
           <td>{{ item.value }}</td>
+          <td class="extra">
+            &#8942;
+            <ContextMenu />
+          </td>
         </tr>
       </tbody>
     </table>
@@ -34,8 +38,12 @@
 
 <script>
 import { mapActions, mapState, mapMutations } from "vuex";
+import ContextMenu from "./ContextMenu";
 export default {
   name: "PaymentListData",
+  components: {
+    ContextMenu,
+  },
   data() {
     return {
       list: [],
@@ -102,5 +110,9 @@ td {
   flex-direction: row;
   justify-content: center;
   margin-bottom: 40px;
+}
+
+.extra {
+  position: relative;
 }
 </style>
