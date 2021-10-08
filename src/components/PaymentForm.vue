@@ -4,7 +4,12 @@
       <input type="text" placeholder="Payment description" v-model="category" />
       <input type="text" placeholder="Payment amount" v-model="value" />
       <input type="text" placeholder="Payment date" v-model="date" />
-      <button class="paymentListButton" type="button" @click="addPayment">
+      <button
+        class="paymentListButton"
+        type="button"
+        @click="addPayment"
+        v-if="isFull"
+      >
         Add +
       </button>
     </form>
@@ -13,6 +18,8 @@
 
 <script>
 import { mapState, mapMutations } from "vuex";
+import { getCurrentDate } from "../utils";
+import { linkButtons } from "../assets/selects";
 export default {
   name: "PaymentForm",
   data() {
@@ -24,7 +31,17 @@ export default {
   },
   methods: {
     ...mapMutations("paymentData", ["addNewPayment"]),
+    getCurrentDate,
+    setParams() {
+      if (this.routeNameCheck()) {
+        this.date = this.getCurrentDate();
+        this.category = this.$route.name;
+        this.category = this.category[0].toUpperCase() + this.category.slice(1);
+        this.value = this.$route.params?.value;
+      }
+    },
     addPayment() {
+      this.setParams();
       const data = {
         category: this.category,
         value: this.value,
@@ -32,9 +49,27 @@ export default {
       };
       this.addNewPayment(data);
     },
+    routeNameCheck() {
+      return this.list.some((item) => item.category === this.$route.name);
+    },
   },
   computed: {
     ...mapState("paymentData", ["paymentData"]),
+    list() {
+      return linkButtons;
+    },
+    getRouteParams() {
+      return {
+        name: this.$route.name,
+        params: this.$route.params,
+      };
+    },
+    isFull() {
+      return this.date && this.category && this.value;
+    },
+  },
+  mounted() {
+    this.setParams();
   },
 };
 </script>

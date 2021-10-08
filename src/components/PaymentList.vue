@@ -1,26 +1,25 @@
 <template>
   <div>
     <PaymentListData />
-    <button class="paymentListButton" @click="isVisibleForm = !isVisibleForm">
-      Add new cost +
-    </button>
-    <PaymentForm v-show="isVisibleForm" />
+    <PaymentLinks />
+    <PaymentForm v-show="isVisibleForm == true" />
   </div>
 </template>
 
 <script>
 import PaymentListData from "./PaymentListData";
 import PaymentForm from "./PaymentForm";
+import PaymentLinks from "./PaymentLinks";
+import { mapState } from "vuex";
 export default {
   name: "PaymentList",
   components: {
     PaymentListData,
     PaymentForm,
+    PaymentLinks,
   },
-  data() {
-    return {
-      isVisibleForm: false,
-    };
+  computed: {
+    ...mapState("paymentData", ["isVisibleForm"]),
   },
   methods: {
     link(category, value) {

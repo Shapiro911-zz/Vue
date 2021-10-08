@@ -3,6 +3,8 @@ const state = {
     currentList: [],
     totalPages: null,
     limit: 3,
+    currentPage: 1,
+    isVisibleForm: false,
 }
 
 const mutations = {
@@ -24,6 +26,17 @@ const mutations = {
     addNewPayment(state, data) {
         state.paymentData.push(data);
     },
+    setFormVisible(state, flag) {
+        if (flag != undefined) {
+            state.isVisibleForm = flag;
+        }
+        else {
+            state.isVisibleForm = !state.isVisibleForm;
+        }
+    },
+    setCurrentPage(state, page) {
+        state.currentPage = page;
+    }
 }
 
 const actions = {
