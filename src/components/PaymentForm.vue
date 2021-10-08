@@ -42,7 +42,6 @@ export default {
       }
     },
     addPayment() {
-      this.setParams();
       const data = {
         id: this.paymentData.length + 1,
         category: this.category,
@@ -70,8 +69,10 @@ export default {
       return this.date && this.category && this.value;
     },
   },
-  mounted() {
-    this.setParams();
+  watch: {
+    $route() {
+      this.setParams();
+    },
   },
 };
 </script>
