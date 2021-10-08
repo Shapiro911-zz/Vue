@@ -17,13 +17,9 @@
 </template>
 
 <script>
-<<<<<<< refs/remotes/origin/L4
 import { mapState, mapActions } from "vuex";
-=======
-import { mapState, mapMutations } from "vuex";
 import { getCurrentDate } from "../utils";
 import { linkButtons } from "../assets/selects";
->>>>>>> L5
 export default {
   name: "PaymentForm",
   data() {
@@ -35,10 +31,7 @@ export default {
     };
   },
   methods: {
-<<<<<<< refs/remotes/origin/L4
     ...mapActions("paymentData", ["addNewPayment"]),
-=======
-    ...mapMutations("paymentData", ["addNewPayment"]),
     getCurrentDate,
     setParams() {
       if (this.routeNameCheck()) {
@@ -48,7 +41,6 @@ export default {
         this.value = this.$route.params?.value;
       }
     },
->>>>>>> L5
     addPayment() {
       this.setParams();
       const data = {

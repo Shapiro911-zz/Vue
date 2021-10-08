@@ -4,10 +4,7 @@ const state = {
     totalPages: null,
     limit: 3,
     currentPage: 1,
-<<<<<<< refs/remotes/origin/L4
-=======
     isVisibleForm: false,
->>>>>>> L5
 }
 
 const mutations = {
@@ -26,8 +23,6 @@ const mutations = {
         }
         state.totalPages = Math.ceil(state.paymentData.length / state.limit);
     },
-<<<<<<< refs/remotes/origin/L4
-=======
     addNewPayment(state, data) {
         state.paymentData.push(data);
     },
@@ -39,7 +34,6 @@ const mutations = {
             state.isVisibleForm = !state.isVisibleForm;
         }
     },
->>>>>>> L5
     setCurrentPage(state, page) {
         state.currentPage = page;
     }
