@@ -15,10 +15,8 @@
           <td>{{ item.date }}</td>
           <td>{{ item.category }}</td>
           <td>{{ item.value }}</td>
-          <td class="extra">
-            &#8942;
-            <ContextMenu />
-          </td>
+          <td class="extra" @click="showMenu(item.id)">&#8942;</td>
+          <ContextMenu :item="item" :isVisibleId="isVisibleId" />
         </tr>
       </tbody>
     </table>
@@ -47,6 +45,7 @@ export default {
   data() {
     return {
       list: [],
+      isVisibleId: null,
     };
   },
   methods: {
@@ -69,6 +68,10 @@ export default {
         this.setCurrentPage(page);
         this.fetchData(this.currentPage);
       }
+    },
+    showMenu(id) {
+      this.isVisibleId = id;
+      this.$contextMenu.show();
     },
   },
   computed: {
@@ -99,6 +102,7 @@ th {
 
 tbody tr {
   border-top: 1px solid grey;
+  position: relative;
 }
 
 td {
@@ -113,6 +117,6 @@ td {
 }
 
 .extra {
-  position: relative;
+  cursor: pointer;
 }
 </style>

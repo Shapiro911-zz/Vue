@@ -7,12 +7,10 @@ export default {
         this.installed = true;
 
         Vue.prototype.$contextMenu = {
+            EventBus: new Vue(),
             show() {
-                console.log('kek')
+                this.EventBus.$emit('show');
             },
-            hide() {
-
-            }
         }
     }
 }

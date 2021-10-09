@@ -21,10 +21,6 @@ const mutations = {
             }
             flag = false;
         }
-        state.totalPages = Math.ceil(state.paymentData.length / state.limit);
-    },
-    addNewPayment(state, data) {
-        state.paymentData.push(data);
     },
     setFormVisible(state, flag) {
         if (flag != undefined) {
@@ -37,20 +33,6 @@ const mutations = {
     setCurrentPage(state, page) {
         state.currentPage = page;
     },
-    deletePayment(state, id) {
-        for (let i = 0; i < state.paymentData.length; i++) {
-            if (state.paymentData[i].id == id) {
-                state.paymentData.splice(i, 1);
-            }
-        }
-    },
-    redactPayment(state, data) {
-        for (let i = 0; i < state.paymentData.length; i++) {
-            if (state.paymentData[i].id == data.id) {
-                state.paymentData.splice(i, 1, data);
-            }
-        }
-    }
 }
 
 const actions = {
@@ -60,7 +42,8 @@ const actions = {
         fetch('https://shapiro911.github.io/DB/data/paymentData.json')
             .then(response => response.json())
             .then(res => {
-                commit('setPaymentData', res)
+                if (state.paymentData.length == 0) { commit('setPaymentData', res) }
+                state.totalPages = Math.ceil(state.paymentData.length / state.limit);
                 state.currentList = state.paymentData.slice(from, to)
                 state.currentPage = page;
             })
@@ -69,6 +52,22 @@ const actions = {
         state.paymentData.push(data);
         dispatch('fetchData', state.currentPage)
     },
+    deletePayment({ dispatch }, id) {
+        for (let i = 0; i < state.paymentData.length; i++) {
+            if (state.paymentData[i].id == id) {
+                state.paymentData.splice(i, 1);
+            }
+            dispatch('fetchData', state.currentPage)
+        }
+    },
+    redactPayment({ dispatch }, data) {
+        for (let i = 0; i < state.paymentData.length; i++) {
+            if (state.paymentData[i].id == data.id) {
+                state.paymentData.splice(i, 1, data);
+            }
+        }
+        dispatch('fetchData', state.currentPage)
+    }
 }
 
 export default {

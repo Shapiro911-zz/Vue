@@ -1,22 +1,73 @@
 <template>
-  <div class="menu">
-    <button>Redact</button>
-    <button>Delete</button>
-  </div>
+  <transition name="fade">
+    <div class="menu" v-show="isVisibleMenu && isVisibleId == item.id">
+      <button @click="showRedactForm">Redact</button>
+      <div class="redactMenu" v-show="isVisibleForm">
+        <input
+          type="text"
+          placeholder="Payment description"
+          v-model="category"
+        />
+        <input type="text" placeholder="Payment amount" v-model="value" />
+        <input type="text" placeholder="Payment date" v-model="date" />
+        <button class="paymentListButton" type="button" @click="redactItem()">
+          Redact
+        </button>
+      </div>
+      <button @click="deleteItem(item.id)">Delete</button>
+    </div>
+  </transition>
 </template>
 
 <script>
 import { mapActions } from "vuex";
 export default {
   name: "ContextMenu",
+  props: {
+    item: {
+      type: Object,
+    },
+    isVisibleId: {
+      type: Number,
+    },
+  },
   data() {
     return {
-      isHidden: true,
+      isVisibleMenu: false,
+      isVisibleForm: false,
+      id: this.item.id,
+      category: this.item.category,
+      value: this.item.value,
+      date: this.item.date,
     };
   },
   methods: {
-    ...mapActions("paymentData", ["redactPayment", "deletePayment"]),
-    deletePayment() {},
+    ...mapActions("paymentData", [
+      "redactPayment",
+      "deletePayment",
+      "redactPayment",
+    ]),
+    showMenu() {
+      this.isVisibleMenu = !this.isVisibleMenu;
+    },
+    deleteItem(id) {
+      this.deletePayment(id);
+    },
+    showRedactForm() {
+      this.isVisibleForm = !this.isVisibleForm;
+    },
+    redactItem() {
+      const data = {
+        id: this.id,
+        category: this.category,
+        value: this.value,
+        date: this.date,
+      };
+      this.redactPayment(data);
+    },
+  },
+  mounted() {
+    this.$contextMenu.EventBus.$on("show", this.showMenu);
   },
 };
 </script>
@@ -50,10 +101,27 @@ export default {
   background-color: white;
 }
 
+.redactMenu {
+  display: flex;
+  flex-direction: column;
+}
+
 button {
   border: none;
   background: none;
   padding: 0 10px;
   font-size: 14px;
+  cursor: pointer;
+  color: black;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
