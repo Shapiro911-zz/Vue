@@ -1,10 +1,30 @@
 <template>
   <div class="container">
     <form id="paymentAdd">
-      <input type="text" placeholder="Payment description" v-model="category" />
-      <input type="text" placeholder="Payment amount" v-model="value" />
-      <input type="text" placeholder="Payment date" v-model="date" />
-      <button class="paymentListButton" type="button" @click="addPayment">
+      <input
+        type="text"
+        name="category"
+        placeholder="Payment description"
+        v-model="category"
+      />
+      <input
+        type="text"
+        name="value"
+        placeholder="Payment amount"
+        v-model.number="value"
+      />
+      <input
+        type="text"
+        name="date"
+        placeholder="Payment date"
+        v-model="date"
+      />
+      <button
+        class="paymentListButton"
+        type="button"
+        @click="addPayment"
+        v-show="isFull"
+      >
         Add +
       </button>
     </form>
@@ -12,23 +32,61 @@
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
+import { getCurrentDate } from "../utils";
+import { linkButtons } from "../assets/selects";
 export default {
   name: "PaymentForm",
   data() {
     return {
+      id: null,
       category: "",
       value: null,
       date: "",
     };
   },
   methods: {
+    ...mapActions("paymentData", ["addNewPayment"]),
+    getCurrentDate,
+    setParams() {
+      if (this.routeNameCheck()) {
+        this.date = this.getCurrentDate();
+        this.category = this.$route.name;
+        this.category = this.category[0].toUpperCase() + this.category.slice(1);
+        this.value = this.$route.params?.value;
+      }
+    },
     addPayment() {
       const data = {
+        id: this.paymentData.length + 1,
         category: this.category,
         value: this.value,
         date: this.date,
       };
-      this.$emit("addPayment", data);
+      this.addNewPayment(data);
+    },
+    routeNameCheck() {
+      return this.list.some((item) => item.category === this.$route.name);
+    },
+  },
+  computed: {
+    ...mapState("paymentData", ["paymentData"]),
+    list() {
+      return linkButtons;
+    },
+    getRouteParams() {
+      return {
+        name: this.$route.name,
+        params: this.$route.params,
+      };
+    },
+    isFull() {
+      return this.date && this.category && this.value;
+    },
+  },
+  watch: {
+    $route() {
+      this.setParams();
     },
   },
 };
