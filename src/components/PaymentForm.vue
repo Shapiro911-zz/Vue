@@ -1,15 +1,25 @@
 <template>
   <div class="container">
     <form id="paymentAdd">
-      <input type="text" placeholder="Payment description" v-model="category" />
-      <input type="text" placeholder="Payment amount" v-model="value" />
-      <input type="text" placeholder="Payment date" v-model="date" />
-      <button
-        class="paymentListButton"
-        type="button"
-        @click="addPayment"
-        v-if="isFull"
-      >
+      <input
+        type="text"
+        name="category"
+        placeholder="Payment description"
+        v-model="category"
+      />
+      <input
+        type="text"
+        name="value"
+        placeholder="Payment amount"
+        v-model.number="value"
+      />
+      <input
+        type="text"
+        name="date"
+        placeholder="Payment date"
+        v-model="date"
+      />
+      <button class="paymentListButton" type="button" @click="addPayment">
         Add +
       </button>
     </form>
