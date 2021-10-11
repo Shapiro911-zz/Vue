@@ -19,7 +19,12 @@
         placeholder="Payment date"
         v-model="date"
       />
-      <button class="paymentListButton" type="button" @click="addPayment">
+      <button
+        class="paymentListButton"
+        type="button"
+        @click="addPayment"
+        v-show="isFull"
+      >
         Add +
       </button>
     </form>
