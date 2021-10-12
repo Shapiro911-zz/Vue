@@ -12,24 +12,31 @@
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
 export default {
   name: "PaymentForm",
   data() {
     return {
+      id: null,
       category: "",
       value: null,
       date: "",
     };
   },
   methods: {
+    ...mapActions("paymentData", ["addNewPayment"]),
     addPayment() {
       const data = {
+        id: this.paymentData.length + 1,
         category: this.category,
         value: this.value,
         date: this.date,
       };
-      this.$emit("addPayment", data);
+      this.addNewPayment(data);
     },
+  },
+  computed: {
+    ...mapState("paymentData", ["paymentData"]),
   },
 };
 </script>
