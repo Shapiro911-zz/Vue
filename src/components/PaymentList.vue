@@ -33,4 +33,7 @@ export default {
 </script>
 
 <style scoped>
+div {
+  margin-top: 40px;
+}
 </style>

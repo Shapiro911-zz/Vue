@@ -1,8 +1,16 @@
 <template>
-  <div id="app">
-    <Calculator v-if="0" />
-    <PaymentList />
-  </div>
+  <v-app>
+    <v-app-bar></v-app-bar>
+    <v-system-bar></v-system-bar>
+    <v-main>
+      <div id="app">
+        <Calculator v-if="0" />
+        <PaymentList />
+      </div>
+    </v-main>
+    <v-bottom-navigation></v-bottom-navigation>
+    <v-footer></v-footer>
+  </v-app>
 </template>
 
 <script>
@@ -25,7 +33,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 
 .container {

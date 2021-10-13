@@ -5,6 +5,7 @@ import PaymentList from './components/PaymentList'
 import store from './store'
 import router from './router'
 import contextMenu from './plugins/contextMenu'
+import vuetify from './plugins/vuetify'
 
 Vue.component('PaymentList', PaymentList);
 Vue.use(contextMenu);
@@ -15,5 +16,6 @@ Vue.config.productionTip = false;
 new Vue({
   render: h => h(App),
   store,
-  router,
+  vuetify,
+  router
 }).$mount('#app')

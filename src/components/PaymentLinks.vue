@@ -1,18 +1,16 @@
 <template>
   <div class="container">
     <div class="links">
-      <div
+      <v-btn
         v-for="item in list"
         :key="item.category"
         class="linksButton"
         @click="linkHandler(item)"
       >
         Add {{ item.category }}: {{ item.params.value }}
-      </div>
+      </v-btn>
     </div>
-    <button class="paymentListButton" @click="openForm()">
-      Add new cost +
-    </button>
+    <v-btn @click="openForm()"> Add new cost + </v-btn>
   </div>
 </template>
 
@@ -70,5 +68,9 @@ export default {
   transition: 0.3s;
   transform: scale(1.01);
   box-shadow: 1px 2px 10px rgba(0, 163, 255, 0.2);
+}
+
+.container {
+  margin-bottom: 40px;
 }
 </style>

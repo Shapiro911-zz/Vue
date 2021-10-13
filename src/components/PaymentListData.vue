@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <table id="paymentTable">
+    <v-simple-table id="paymentTable">
       <thead>
         <tr>
           <th>ID</th>
@@ -19,17 +19,17 @@
           <ContextMenu :item="item" :isVisibleId="isVisibleId" />
         </tr>
       </tbody>
-    </table>
+    </v-simple-table>
     <div class="pagination">
-      <button @click="prevPage">←</button>
-      <button
+      <v-btn @click="prevPage">←</v-btn>
+      <v-btn
         v-for="(page, index) in totalPages"
         :key="page"
         @click="choosePage(index + 1)"
       >
         {{ index + 1 }}
-      </button>
-      <button @click="nextPage">→</button>
+      </v-btn>
+      <v-btn @click="nextPage">→</v-btn>
     </div>
   </div>
 </template>
