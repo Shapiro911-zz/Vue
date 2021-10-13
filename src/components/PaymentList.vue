@@ -1,51 +1,39 @@
 <template>
   <div>
-    <PaymentListData :list="responseData" />
-    <button class="paymentListButton" @click="isVisibleForm = !isVisibleForm">
-      Add new cost +
-    </button>
-    <PaymentForm v-show="isVisibleForm" @addPayment="addNewPayment" />
+    <PaymentListData />
+    <PaymentLinks />
+    <PaymentForm v-show="isVisibleForm == true" />
   </div>
 </template>
 
 <script>
 import PaymentListData from "./PaymentListData";
 import PaymentForm from "./PaymentForm";
+import PaymentLinks from "./PaymentLinks";
+import { mapState } from "vuex";
 export default {
   name: "PaymentList",
   components: {
     PaymentListData,
     PaymentForm,
+    PaymentLinks,
   },
-  data() {
-    return {
-      responseData: [
-        {
-          date: "28.03.2020",
-          category: "Food",
-          value: 169,
-        },
-        {
-          date: "24.03.2020",
-          category: "Transport",
-          value: 368,
-        },
-        {
-          date: "26.03.2020",
-          category: "Food",
-          value: 532,
-        },
-      ],
-      isVisibleForm: false,
-    };
+  computed: {
+    ...mapState("paymentData", ["isVisibleForm"]),
   },
   methods: {
-    addNewPayment(data) {
-      this.responseData = [...this.responseData, data];
+    link(category, value) {
+      this.$router.push({
+        name: "addPayment",
+        query: { category: category, value: value },
+      });
     },
   },
 };
 </script>
 
 <style scoped>
+div {
+  margin-top: 40px;
+}
 </style>
